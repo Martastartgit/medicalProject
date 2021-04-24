@@ -13,7 +13,12 @@ export const HistorySchema = new Schema<IHistory>({
   userId: {
     type: Schema.Types.ObjectId,
     ref: TablesNameEnum.USER,
-    required: true
+    required: false
+  },
+  adminId: {
+    type: Schema.Types.ObjectId,
+    ref: TablesNameEnum.ADMIN,
+    required: false
   },
   data: Schema.Types.Mixed
 },{

@@ -6,5 +6,6 @@ export * from './doctor.interface';
 export * from './history.interface';
 export * from './procedure.interface';
 export * from './record.interface';
+export * from './request.interface';
 export * from './token.interface';
 export * from './user.interface';

@@ -1,9 +1,9 @@
 import {Document} from 'mongoose';
 
-import {AdminActionEnum} from '../constants';
+import {AdminsActionEnum} from '../constants';
 
 export interface IAdminToken {
-    action?: AdminActionEnum,
+    action?: AdminsActionEnum,
     token?: string
 }
 

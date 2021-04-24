@@ -47,7 +47,7 @@ export const UserSchema = new Schema<IUser>({
   status: {
     type: String,
     required: true,
-    default: StatusEnum.PENDING
+    default: StatusEnum.USER_PENDING
   },
   tokens: [tokenSubModel]
 

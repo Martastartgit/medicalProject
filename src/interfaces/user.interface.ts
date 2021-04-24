@@ -1,8 +1,8 @@
 import {Document} from 'mongoose';
-import {UserActionEnum} from '../constants';
+import {UsersActionEnum} from '../constants';
 
 export interface IUserToken {
-    action?: UserActionEnum,
+    action?: UsersActionEnum,
     token?: string
 }
 

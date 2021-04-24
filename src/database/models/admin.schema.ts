@@ -19,7 +19,7 @@ export const AdminSchema = new Schema<IAdmin>({
   },
   surname: {
     type: String,
-    minlength: 4,
+    minlength: 2,
     maxlength: 50,
     required: true
   },
@@ -41,7 +41,7 @@ export const AdminSchema = new Schema<IAdmin>({
   status: {
     type: String,
     required: true,
-    default: StatusEnum.PENDING
+    default: StatusEnum.ADMIN_PENDING
   },
   tokens: [tokenSubModel]
 
