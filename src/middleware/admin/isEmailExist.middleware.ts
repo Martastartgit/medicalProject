@@ -17,6 +17,7 @@ export const isEmailExistMiddleware = (role: RolesEnum) =>
               customErrors.BAD_REQUEST_EMAIL_EXIST.message,
               customErrors.BAD_REQUEST_EMAIL_EXIST.code);
           }
+
           break;
         // case RolesEnum.USER:
         default:

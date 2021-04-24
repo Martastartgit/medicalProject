@@ -25,8 +25,7 @@ export const AdminSchema = new Schema<IAdmin>({
   },
   password: {
     type: String,
-    required: true,
-    select: false
+    required: true
   },
   email: {
     type: String,
