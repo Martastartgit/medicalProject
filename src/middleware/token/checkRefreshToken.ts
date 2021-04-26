@@ -31,7 +31,7 @@ export const checkRefreshTokenMiddleware =(role: RolesEnum) =>
         case RolesEnum.USER:
           await tokenRefreshVerificator(RolesEnum.USER, refresh_token);
 
-          tokens = await authService.findTokenByParams({refresh_token});
+          tokens = await authService.findTokenByParams({refreshToken: refresh_token});
 
           if (!tokens) {
             return next(new ErrorHandler(CodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message));

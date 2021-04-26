@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from 'express';
 
 import {IAdmin, IRequest} from '../../interfaces';
 import {adminService} from '../../services/admin';
-import {AdminsActionEnum, CodesEnum, HistoryEnum, StatusEnum} from '../../constants';
+import {AdminsActionEnum, CodesEnum, HistoryEnum, RequestHeadersEnum, StatusEnum} from '../../constants';
 import {hashPassword, tokenizer} from '../../helpers';
 import {historyService} from '../../services/history';
 import {emailService} from '../../services';
@@ -45,6 +45,41 @@ class AdminController {
       next(e);
     }
 
+  }
+
+  async forgotPassword(req: IRequest, res: Response, next: NextFunction) {
+    try {
+      const {_id, email} = req.admin as IAdmin;
+
+      const {access_token} = tokenizer(AdminsActionEnum.FORGOT_PASSWORD);
+
+      await adminService.addActionToken(_id, {action: AdminsActionEnum.FORGOT_PASSWORD, token: access_token});
+
+      await emailService.sendMail(email, AdminsActionEnum.FORGOT_PASSWORD, {token: access_token});
+
+      res.end();
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async setNewPassword(req: IRequest, res: Response, next: NextFunction){
+    try {
+      const {_id} = req.admin as IAdmin;
+      const {password} = req.body;
+
+      const token = await req.get(RequestHeadersEnum.AUTHORIZATION);
+
+      const newPassword = await hashPassword(password);
+
+      await adminService.updateByParams(_id, {password: newPassword});
+
+      await adminService.removeActionToken(AdminsActionEnum.FORGOT_PASSWORD, token as string );
+
+      res.end();
+    } catch (e) {
+      next(e);
+    }
   }
 }
 

@@ -22,10 +22,10 @@ export const checkIsEmailInDBMiddleware = (role: RolesEnum) =>
           // case RolesEnum.USER:
 
         default:
-          throw new ErrorHandler(
+          return next(new ErrorHandler(
             CodesEnum.BAD_REQUEST,
             customErrors.BAD_REQUEST_NO_ROLE_TYPE.message,
-            customErrors.BAD_REQUEST_NO_ROLE_TYPE.code);
+            customErrors.BAD_REQUEST_NO_ROLE_TYPE.code)) ;
       }
       next();
     } catch (e) {
