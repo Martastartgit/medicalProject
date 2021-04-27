@@ -30,11 +30,11 @@ export const checkAdminAccessTokenMiddleware = (action: AdminsActionEnum) =>
           req.admin = adminByToken;
           break;
 
-        case AdminsActionEnum.ADMIN_LOGIN:
-          await tokenVerificator(AdminsActionEnum.ADMIN_LOGIN, token);
+        case AdminsActionEnum.FORGOT_PASSWORD:
+          await tokenVerificator(AdminsActionEnum.FORGOT_PASSWORD, token);
 
           const adminByToken2 = await adminService.findOneByParams(
-            {'tokens.action': AdminsActionEnum.ADMIN_LOGIN, 'tokens.token': token}
+            {'tokens.action': AdminsActionEnum.FORGOT_PASSWORD, 'tokens.token': token}
           );
 
           if (!adminByToken2) {
@@ -42,20 +42,6 @@ export const checkAdminAccessTokenMiddleware = (action: AdminsActionEnum) =>
           }
 
           req.admin = adminByToken2;
-          break;
-
-        case AdminsActionEnum.FORGOT_PASSWORD:
-          await tokenVerificator(AdminsActionEnum.FORGOT_PASSWORD, token);
-
-          const adminByToken3 = await adminService.findOneByParams(
-            {'tokens.action': AdminsActionEnum.FORGOT_PASSWORD, 'tokens.token': token}
-          );
-
-          if (!adminByToken3) {
-            throw new ErrorHandler(CodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message);
-          }
-
-          req.admin = adminByToken3;
           break;
         default:
           throw new ErrorHandler(CodesEnum.BAD_REQUEST, customErrors.BAD_REQUEST_NO_ROLE_TYPE.message);

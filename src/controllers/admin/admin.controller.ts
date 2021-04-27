@@ -34,9 +34,13 @@ class AdminController {
 
   async confirmAdmin(req: IRequest, res: Response, next: NextFunction){
     try {
-      const {_id} = req.admin as IAdmin;
+      const {_id, tokens = []} = req.admin as IAdmin;
 
-      await adminService.updateByParams(_id, {status: StatusEnum.ADMIN_CONFIRMED});
+      const tokenToDelete = await req.get(RequestHeadersEnum.AUTHORIZATION);
+
+      const newToken = tokens.filter((item)=> item.token !== tokenToDelete);
+
+      await adminService.updateByParams(_id, {status: StatusEnum.ADMIN_CONFIRMED, tokens: newToken}as Partial<IAdmin>);
 
       await historyService.createHistory({event: HistoryEnum.CONFIRMED, adminId: _id});
 
@@ -65,16 +69,16 @@ class AdminController {
 
   async setNewPassword(req: IRequest, res: Response, next: NextFunction){
     try {
-      const {_id} = req.admin as IAdmin;
+      const {_id, tokens = []} = req.admin as IAdmin;
       const {password} = req.body;
 
-      const token = await req.get(RequestHeadersEnum.AUTHORIZATION);
+      const tokenToDelete = await req.get(RequestHeadersEnum.AUTHORIZATION);
 
       const newPassword = await hashPassword(password);
 
-      await adminService.updateByParams(_id, {password: newPassword});
+      const newToken = tokens.filter((item)=> item.token !== tokenToDelete);
 
-      await adminService.removeActionToken(AdminsActionEnum.FORGOT_PASSWORD, token as string );
+      await adminService.updateByParams(_id, {password: newPassword, tokens: newToken} as Partial<IAdmin>);
 
       res.end();
     } catch (e) {

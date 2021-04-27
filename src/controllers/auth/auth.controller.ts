@@ -1,11 +1,11 @@
 import {IAdmin, IRequest, IToken} from '../../interfaces';
 import {NextFunction, Response} from 'express';
 import {comparePassword, tokenizer} from '../../helpers';
-import {AdminsActionEnum} from '../../constants';
+import {AdminsActionEnum, CodesEnum, RequestHeadersEnum} from '../../constants';
 import {authService, historyService} from '../../services';
 
 class AuthController {
-  async authorization(req: IRequest, res: Response, next: NextFunction) {
+  async adminAuthorization(req: IRequest, res: Response, next: NextFunction) {
     try {
       const {_id, password} = req.admin as IAdmin;
 
@@ -41,6 +41,22 @@ class AuthController {
       next(e);
     }
   }
+
+  async logout(req: IRequest, res: Response, next: NextFunction) {
+    try {
+      const accessToken = await req.get(RequestHeadersEnum.AUTHORIZATION);
+
+      await authService.removeToken({accessToken});
+
+      res.sendStatus(CodesEnum.NO_CONTENT);
+    } catch (e) {
+      next(e);
+    }
+
+  }
+
+
+
 
 }
 export const authController = new AuthController();

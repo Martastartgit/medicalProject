@@ -1,4 +1,4 @@
-import {IToken} from '../../interfaces';
+import {IAdmin, IToken, IUser} from '../../interfaces';
 import {TokenModel} from '../../database';
 
 class AuthService {
@@ -10,8 +10,20 @@ class AuthService {
     return TokenModel.findByIdAndUpdate(id, tokens) as any;
   }
 
-  findTokenByParams(findObject: any): Promise<IToken | null> {
-    return TokenModel.findOne(findObject) as any;
+  findTokenByParams(findObject: { accessToken?: string, refreshToken?: string }): Promise<IToken | null> {
+    return TokenModel.findOne(findObject).exec();
+  }
+
+  findAdminByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IAdmin | null> {
+    return TokenModel.findOne(findObject).populate('adminId') as any;
+  }
+
+  findUserByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IUser | null> {
+    return TokenModel.findOne(findObject).populate('userId') as any;
+  }
+
+  removeToken(removeObject: { accessToken?: string, refreshToken?: string }): Promise<IToken | null> {
+    return TokenModel.findOneAndDelete(removeObject).exec();
   }
 
 }
