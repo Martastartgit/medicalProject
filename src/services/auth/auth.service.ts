@@ -14,12 +14,22 @@ class AuthService {
     return TokenModel.findOne(findObject).exec();
   }
 
-  findAdminByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IAdmin | null> {
-    return TokenModel.findOne(findObject).populate('adminId') as any;
+  async findAdminByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IAdmin | null> {
+    const tokenWithAdmin = await TokenModel
+      .findOne(findObject)
+      .populate('adminId')
+      .select({adminId: 1, _id: 0}) as any;
+
+    return tokenWithAdmin?.adminId?.toJSON();
   }
 
-  findUserByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IUser | null> {
-    return TokenModel.findOne(findObject).populate('userId') as any;
+  async findUserByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IUser | null> {
+    const tokenWithUser = await TokenModel
+      .findOne(findObject)
+      .populate('userId')
+      .select({userId: 1, _id: 0}) as any;
+
+    return tokenWithUser?.userId?.toJSON();
   }
 
   removeToken(removeObject: { accessToken?: string, refreshToken?: string }): Promise<IToken | null> {

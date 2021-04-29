@@ -1,7 +1,7 @@
 import {IAdmin, IRequest, IToken} from '../../interfaces';
 import {NextFunction, Response} from 'express';
 import {comparePassword, tokenizer} from '../../helpers';
-import {AdminsActionEnum, CodesEnum, RequestHeadersEnum} from '../../constants';
+import {adminHistoryEnum, AdminsActionEnum, CodesEnum, RequestHeadersEnum} from '../../constants';
 import {authService, historyService} from '../../services';
 
 class AuthController {
@@ -17,7 +17,7 @@ class AuthController {
 
       await authService.createToken({accessToken: access_token, refreshToken: refresh_token, adminId: _id});
 
-      await historyService.createHistory({event: AdminsActionEnum.ADMIN_LOGIN, adminId: _id});
+      await historyService.createHistory({event: adminHistoryEnum.ADMIN_LOGIN, adminId: _id});
 
       res.json({access_token, refresh_token});
 
@@ -44,9 +44,13 @@ class AuthController {
 
   async logout(req: IRequest, res: Response, next: NextFunction) {
     try {
+      const {_id} = req.admin as IAdmin;
+
       const accessToken = await req.get(RequestHeadersEnum.AUTHORIZATION);
 
       await authService.removeToken({accessToken});
+
+      await historyService.createHistory({event: adminHistoryEnum.ADMIN_LOGOUT, adminId: _id});
 
       res.sendStatus(CodesEnum.NO_CONTENT);
     } catch (e) {
@@ -54,9 +58,6 @@ class AuthController {
     }
 
   }
-
-
-
 
 }
 export const authController = new AuthController();

@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from 'express';
 
 import {IAdmin, IRequest} from '../../interfaces';
 import {adminService} from '../../services/admin';
-import {AdminsActionEnum, CodesEnum, HistoryEnum, RequestHeadersEnum, StatusEnum} from '../../constants';
+import {adminHistoryEnum, AdminsActionEnum, CodesEnum, RequestHeadersEnum, StatusEnum} from '../../constants';
 import {hashPassword, tokenizer} from '../../helpers';
 import {historyService} from '../../services/history';
 import {emailService} from '../../services';
@@ -22,7 +22,7 @@ class AdminController {
 
       await emailService.sendMail(admin.email, AdminsActionEnum.ADMIN_REGISTER, {token: access_token});
 
-      await historyService.createHistory({event: HistoryEnum.REGISTERED, adminId: _id});
+      await historyService.createHistory({event: adminHistoryEnum.ADMIN_REGISTERED, adminId: _id});
 
       res.sendStatus(CodesEnum.CREATED);
 
@@ -42,7 +42,7 @@ class AdminController {
 
       await adminService.updateByParams(_id, {status: StatusEnum.ADMIN_CONFIRMED, tokens: newToken}as Partial<IAdmin>);
 
-      await historyService.createHistory({event: HistoryEnum.CONFIRMED, adminId: _id});
+      await historyService.createHistory({event: adminHistoryEnum.ADMIN_CONFIRMED, adminId: _id});
 
       res.end();
     } catch (e) {

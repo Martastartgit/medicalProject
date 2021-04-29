@@ -2,7 +2,7 @@ import {Document} from 'mongoose';
 
 export interface IProcedure extends Document{
     _id: string,
-    title: string,
+    name: string,
     description: string,
     price: number,
     hasDiscount?: boolean,

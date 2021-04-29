@@ -1,7 +1,6 @@
 import {Router} from 'express';
 
 import {
-  checkAccessTokenMiddleware,
   checkIsEmailInDBMiddleware,
   checkPasswordAndEmailMiddleware,
   checkStatusMiddleware
@@ -16,11 +15,6 @@ router.post('/admin',
   checkIsEmailInDBMiddleware(RolesEnum.ADMIN),
   checkStatusMiddleware(StatusEnum.ADMIN_CONFIRMED),
   authController.adminAuthorization
-);
-
-router.post('/admin/logout',
-  checkAccessTokenMiddleware(RolesEnum.ADMIN),
-  authController.logout
 );
 
 export const authRouter = router;

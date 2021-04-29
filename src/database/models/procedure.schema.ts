@@ -6,8 +6,10 @@ import {TablesNameEnum} from '../../constants';
 export type ProcedureType = IProcedure & Document;
 
 export const ProcedureSchema = new Schema<IProcedure>({
-  title: {
+  name: {
     type: String,
+    minlength: 2,
+    maxlength: 50,
     required: true
   },
   description: {
