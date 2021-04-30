@@ -15,6 +15,10 @@ export const DepartmentSchema = new Schema<IDepartment>({
   }],
   Procedures : [{
     type: Schema.Types.ObjectId, ref: TablesNameEnum.PROCEDURE
+  }],
+  Services: [{
+    title: String,
+    price: Number
   }]
 
 },{

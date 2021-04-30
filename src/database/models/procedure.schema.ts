@@ -9,24 +9,33 @@ export const ProcedureSchema = new Schema<IProcedure>({
   name: {
     type: String,
     minlength: 2,
-    maxlength: 50,
-    required: true
+    maxlength: 50
   },
   description: {
+    type: String
+  },
+  symptoms: {
     type: String,
-    required: true
+    minlength: 2,
+    maxlength: 9999,
+    required: false
   },
-  price: {
-    type: Number,
-    required: true
+  causes: {
+    type: String,
+    minlength: 2,
+    maxlength: 9999,
+    required: false
   },
-  hasDiscount: {
-    type: Boolean,
-    required: false,
-    default: false
+  diagnosis: {
+    type: String,
+    minlength: 2,
+    maxlength: 9999,
+    required: false
   },
-  oldPrice: {
-    type: Number,
+  treatment: {
+    type: String,
+    minlength: 2,
+    maxlength: 9999,
     required: false
   }
 

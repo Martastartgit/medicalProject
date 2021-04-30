@@ -31,6 +31,10 @@ export const customErrors = {
     code:0
   },
 
+  BAD_REQUEST_NOT_VALID_ID: {
+    message: 'Not valid id'
+  },
+
   //401
   UNAUTHORIZED_BAD_TOKEN: {
     message: 'Something wrong with token',

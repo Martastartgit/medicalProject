@@ -1,13 +1,12 @@
 import {NextFunction, Request, Response} from 'express';
-
-import {newProcedureValidator} from '../../validators';
+import {newDoctorValidator} from '../../validators';
 import {ErrorHandler} from '../../errors';
 import {CodesEnum} from '../../constants';
 
-export const newProcedureValidationMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-  const {error} = newProcedureValidator.validate(req.body);
+export const newDoctorValidationMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  const {error} = newDoctorValidator.validate(req.body);
 
-  if (error){
+  if (error) {
     return next(new ErrorHandler(CodesEnum.BAD_REQUEST, error.details[0].message));
   }
 

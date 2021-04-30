@@ -24,9 +24,9 @@ export const DoctorSchema = new Schema<IDoctor>({
     type: Number,
     required: false
   },
-  photo:[{
+  photo: {
     type: String
-  }],
+  },
   experience: {
     type: String,
     required: true

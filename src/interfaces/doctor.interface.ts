@@ -6,7 +6,7 @@ export interface IDoctorWorkDay {
 }
 export interface IDoctorDayOff {
     day: string,
-    date: string
+    date?: string
 }
 export interface IDoctor extends Document{
     _id: string,
@@ -16,7 +16,7 @@ export interface IDoctor extends Document{
     experience: string,
     profession: string,
     workDay: [IDoctorWorkDay],
-    dayOff: [IDoctorWorkDay],
+    dayOff?: [IDoctorDayOff],
     createdAt: string,
     updatedAt: string
 }
