@@ -1,6 +1,6 @@
 import * as joi from 'joi';
 
-const workDay = joi.array().items(
+const worksDay = joi.array().items(
   joi.object({
     day: joi.string(),
     hour: joi.string()
@@ -19,6 +19,6 @@ export const newDoctorValidator = joi.object({
   age: joi.number().integer().min(18).max(100),
   experience: joi.string().trim().min(4).max(9999).required(),
   profession: joi.string().trim().min(4).max(50).required(),
-  workDay: workDay.required(),
+  workDay: worksDay,
   dayOff: daysOff
 });

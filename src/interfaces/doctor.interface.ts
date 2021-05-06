@@ -8,7 +8,7 @@ export interface IDoctorDayOff {
     day: string,
     date?: string
 }
-export interface IDoctor extends Document{
+export interface IDoctor extends Document {
     _id: string,
     fullName: string,
     age?: number,
@@ -19,4 +19,23 @@ export interface IDoctor extends Document{
     dayOff?: [IDoctorDayOff],
     createdAt: string,
     updatedAt: string
+}
+
+export interface IDoctorFilterQuery {
+    limit?: number,
+    page?: number,
+    sortBy?: string,
+    orderBy?: string,
+    fullName?: string,
+    profession?: string
+}
+
+export interface IDoctorFilter {
+    fullName?: { $regex: string, $options: string },
+    profession?: { $regex: string, $options: string }
+}
+
+export interface IDoctorFilterParams {
+    fullName?: string,
+    profession?: string
 }

@@ -14,6 +14,10 @@ class AdminService {
     return AdminModel.findOne(findObject) as any;
   }
 
+  findAdminById(id: string): Promise<IAdmin | null> {
+    return AdminModel.findById(id).exec();
+  }
+
   // findByActionToken(action: AdminsActionEnum, token: string): Promise<IAdmin | null> {
   //   return AdminModel.findOne({$and: [
   //     {'tokens.action': AdminsActionEnum},
@@ -23,6 +27,10 @@ class AdminService {
 
   updateByParams(id: string, params: Partial<IAdmin>): Promise<IAdmin> {
     return AdminModel.findByIdAndUpdate(id, params, {new: true}) as any;
+  }
+
+  async deleteAdmin(id: string): Promise<void> {
+    await AdminModel.findByIdAndDelete(id);
   }
 
 }

@@ -22,9 +22,6 @@ export const customErrors = {
   BAD_REQUEST_NO_TOKEN: {
     message: 'Token is not present'
   },
-  BAD_REQUEST_NO_STOCK: {
-    message: 'Stock count is zero'
-  },
 
   BAD_REQUEST_NOT_VALID_FILE: {
     message: 'Not valid file',
@@ -33,6 +30,16 @@ export const customErrors = {
 
   BAD_REQUEST_NOT_VALID_ID: {
     message: 'Not valid id'
+  },
+
+  BAD_REQUEST_REQUIRED_ONE_PHOTO: {
+    message: 'Required only one photo',
+    code: 0
+  },
+
+  BAD_REQUEST_FILE_MAX_SIZE: {
+    message: 'Max size of file',
+    code: 0
   },
 
   //401

@@ -1,11 +1,13 @@
 import {Router} from 'express';
-import {adminController} from '../../controllers/admin';
+
+import {adminController} from '../../controllers';
 import {
+  checkAccessTokenMiddleware,
   checkAdminAccessTokenMiddleware,
   checkIsEmailInDBMiddleware,
   checkIsEmailValidMiddleware,
   checkIsPasswordValidMiddleware,
-  checkStatusMiddleware,
+  checkStatusMiddleware, isAdminIdValidMiddleware,
   isBodyValidMiddleware,
   isEmailExistMiddleware
 } from '../../middleware';
@@ -32,5 +34,14 @@ router.post('/password/reset',
   checkAdminAccessTokenMiddleware(AdminsActionEnum.FORGOT_PASSWORD),
   checkIsPasswordValidMiddleware,
   adminController.setNewPassword);
+
+router.route('/:adminId')
+  .all(isAdminIdValidMiddleware)
+  .get(adminController.findById)
+  .post(checkAccessTokenMiddleware(RolesEnum.ADMIN),
+    checkIsEmailValidMiddleware,
+    adminController.updateAdmin)
+  .delete(checkAccessTokenMiddleware(RolesEnum.ADMIN),
+    adminController.deleteAdmin);
 
 export const adminRouter = router;

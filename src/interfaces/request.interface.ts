@@ -11,5 +11,8 @@ export interface IRequest extends Request{
     user?: IUser,
     token?: IToken,
     doctor?: IDoctor,
-    procedure?: IProcedure
+    procedure?: IProcedure,
+    photos?: any,
+    docs?: any,
+    videos?: any
 }
