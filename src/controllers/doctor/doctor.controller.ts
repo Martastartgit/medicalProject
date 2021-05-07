@@ -69,15 +69,15 @@ class DoctorController {
     }
   }
 
-  async findDoctors(req: IRequest, res: Response, next: NextFunction) {
-    try {
-      const doctors = await doctorService.findByParams(req.query );
-
-      res.json(doctors);
-    } catch (e) {
-      next(e);
-    }
-  }
+  // async findDoctors(req: IRequest, res: Response, next: NextFunction) {
+  //   try {
+  //     const doctors = await doctorService.findByParams(req.query );
+  //
+  //     res.json(doctors);
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // }
 
   async deleteDoctorById(req: IRequest, res: Response, next: NextFunction) {
     try {

@@ -29,8 +29,8 @@ class AdminService {
     return AdminModel.findByIdAndUpdate(id, params, {new: true}) as any;
   }
 
-  async deleteAdmin(id: string): Promise<void> {
-    await AdminModel.findByIdAndDelete(id);
+  deleteAdmin(id: string): Promise<IAdmin> {
+    return AdminModel.findByIdAndDelete(id) as any;
   }
 
 }

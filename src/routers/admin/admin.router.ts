@@ -1,6 +1,7 @@
 import {Router} from 'express';
 
-import {adminController} from '../../controllers';
+import {AdminsActionEnum, RolesEnum, StatusEnum} from '../../constants';
+import {adminController, historyController} from '../../controllers';
 import {
   checkAccessTokenMiddleware,
   checkAdminAccessTokenMiddleware,
@@ -11,7 +12,6 @@ import {
   isBodyValidMiddleware,
   isEmailExistMiddleware
 } from '../../middleware';
-import {AdminsActionEnum, RolesEnum, StatusEnum} from '../../constants';
 
 const router = Router();
 
@@ -36,12 +36,17 @@ router.post('/password/reset',
   adminController.setNewPassword);
 
 router.route('/:adminId')
-  .all(isAdminIdValidMiddleware)
+  .all(isAdminIdValidMiddleware,
+    checkAccessTokenMiddleware(RolesEnum.ADMIN))
   .get(adminController.findById)
-  .post(checkAccessTokenMiddleware(RolesEnum.ADMIN),
-    checkIsEmailValidMiddleware,
+  .post( checkIsEmailValidMiddleware,
     adminController.updateAdmin)
-  .delete(checkAccessTokenMiddleware(RolesEnum.ADMIN),
-    adminController.deleteAdmin);
+  .delete(checkAccessTokenMiddleware(RolesEnum.ADMIN), adminController.deleteAdmin);
+
+router.get('/history/:adminId',
+  checkAccessTokenMiddleware(RolesEnum.ADMIN),
+  isAdminIdValidMiddleware,
+  historyController.findAdminHistory
+);
 
 export const adminRouter = router;

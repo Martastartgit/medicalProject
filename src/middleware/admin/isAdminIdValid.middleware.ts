@@ -1,5 +1,5 @@
+import * as mongoose from 'mongoose';
 import {NextFunction, Response} from 'express';
-import mongoose from 'mongoose';
 
 import {IAdmin,IRequest} from '../../interfaces';
 import {customErrors, ErrorHandler} from '../../errors';

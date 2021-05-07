@@ -3,7 +3,7 @@ import {emailValidator} from '../../validators';
 import {ErrorHandler} from '../../errors';
 import {CodesEnum} from '../../constants';
 
-export const checkIsEmailValidMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const checkIsEmailValidMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const {error} = emailValidator.validate(req.body);
 

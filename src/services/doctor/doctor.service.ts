@@ -1,6 +1,5 @@
-import {IDoctor, IDoctorFilter, IDoctorFilterParams, IDoctorFilterQuery} from '../../interfaces';
+import {IDoctor} from '../../interfaces';
 import {DoctorModel} from '../../database';
-import {queryBuilder} from '../../helpers';
 
 class DoctorService {
   createDoctor(doctorObject: Partial<IDoctor>): Promise<IDoctor> {
@@ -19,24 +18,24 @@ class DoctorService {
     return DoctorModel.findByIdAndUpdate(id, doctorObject, {new: true}) as any;
   }
 
-  findByParams(query: Partial<IDoctorFilterQuery>): Promise<IDoctor | IDoctor[] | null> {
-    const { skip, limit, sort, filters} = queryBuilder(query);
-    const filterObject: Partial<IDoctorFilter> = {};
-    const keys = Object.keys(filters) as Array<keyof IDoctorFilterParams>;
-
-    keys.forEach((key) => {
-      if (key === 'fullName') {
-        filterObject.fullName = {$regex: filters.fullName as string, $options: 'i'};
-      } else if (key === 'profession') {
-        filterObject.profession = {$regex: filters.profession as string, $options: 'i'};
-      } else {
-        // @ts-ignore
-        filterObject[key] = filters[key];
-      }
-    });
-
-    return DoctorModel.find(filterObject).limit(+limit).skip(skip).sort(sort) as any;
-  }
+  // findByParams(query: Partial<IDoctorFilterQuery>): Promise<IDoctor | IDoctor[] | null> {
+  //   const { skip, limit, sort, filters} = queryBuilder(query);
+  //   const filterObject: Partial<IDoctorFilter> = {};
+  //   const keys = Object.keys(filters) as Array<keyof IDoctorFilterParams>;
+  //
+  //   keys.forEach((key) => {
+  //     if (key === 'fullName') {
+  //       filterObject.fullName = {$regex: filters.fullName as string, $options: 'i'};
+  //     } else if (key === 'profession') {
+  //       filterObject.profession = {$regex: filters.profession as string, $options: 'i'};
+  //     } else {
+  //
+  //       filterObject[key] = filters[key];
+  //     }
+  //   });
+  //
+  //   return DoctorModel.find(filterObject).limit(+limit).skip(skip).sort(sort) as any;
+  // }
 
 }
 
