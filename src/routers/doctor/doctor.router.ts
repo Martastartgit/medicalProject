@@ -16,7 +16,8 @@ router.route('/')
     checkPhotoUpload,
     checkDoctorsPhoto,
     newDoctorValidationMiddleware,
-    doctorController.createDoctor);
+    doctorController.createDoctor)
+  .get(doctorController.findDoctors);
 
 router.route('/:doctorId')
   .all(isDoctorIdValidMiddleware)

@@ -1,11 +1,9 @@
 import {NextFunction, Request, Response} from 'express';
 
-import {IAdmin, IRequest} from '../../interfaces';
-import {adminService} from '../../services/admin';
 import {adminHistoryEnum, AdminsActionEnum, CodesEnum, RequestHeadersEnum, StatusEnum} from '../../constants';
+import {IAdmin, IRequest} from '../../interfaces';
 import {hashPassword, tokenizer} from '../../helpers';
-import {historyService} from '../../services/history';
-import { emailService} from '../../services';
+import {adminService, authService, emailService, historyService} from '../../services';
 
 class AdminController {
   async createAdmin(req: Request, res: Response, next: NextFunction){
@@ -114,13 +112,13 @@ class AdminController {
     try {
       const { adminId } = req.params;
 
-      // const tokenToDelete = await req.get(RequestHeadersEnum.AUTHORIZATION);
+      const tokenToDelete = await req.get(RequestHeadersEnum.AUTHORIZATION);
 
       await adminService.deleteAdmin(adminId);
-      //
-      // await authService.removeToken({accessToken: tokenToDelete});
-      //
-      // await historyService.removeHistory({adminId});
+
+      await authService.removeToken({accessToken: tokenToDelete});
+
+      await historyService.removeHistory({adminId});
 
       res.end();
     } catch (e) {

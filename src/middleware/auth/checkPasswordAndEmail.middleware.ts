@@ -3,7 +3,7 @@ import {authValidator} from '../../validators';
 import {ErrorHandler} from '../../errors';
 import {CodesEnum} from '../../constants';
 
-export const checkPasswordAndEmailMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const checkPasswordAndEmailMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const {error} = authValidator.validate(req.body);
 

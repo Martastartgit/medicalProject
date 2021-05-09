@@ -21,21 +21,12 @@ export interface IDoctor extends Document {
     updatedAt: string
 }
 
-// export interface IDoctorFilterQuery {
-//     limit?: number,
-//     page?: number,
-//     sortBy?: string,
-//     orderBy?: string,
-//     fullName?: string,
-//     profession?: string
-// }
-//
-// export interface IDoctorFilter {
-//     fullName?: { $regex: string, $options: string },
-//     profession?: { $regex: string, $options: string }
-// }
-//
-// export interface IDoctorFilterParams {
-//     fullName?: string,
-//     profession?: string
-// }
+export interface IDoctorFilterQuery {
+    limit?: number,
+    page?: number,
+    sortBy?: string,
+    orderBy?: string,
+    fullName?: string,
+    profession?: string
+}
+

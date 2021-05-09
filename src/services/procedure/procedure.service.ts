@@ -1,6 +1,6 @@
-import {IProcedure, IProcedureFilter, IProcedureFilterQuery} from '../../interfaces';
-import {ProcedureModel} from '../../database/models';
-import {queryBuilder} from '../../helpers/queryBuilder';
+import {ProcedureModel} from '../../database';
+import {IProcedure, IProcedureFilterQuery} from '../../interfaces';
+import {queryBuilder} from '../../helpers';
 
 class ProcedureService {
   createProcedure(procedureObject: Partial<IProcedure>): Promise<IProcedure> {
@@ -23,34 +23,14 @@ class ProcedureService {
     return ProcedureModel.findById(id) as any;
   }
 
-  getProcedures(query: Partial<IProcedureFilterQuery> | null): Promise<IProcedure[] | []> {
-    const { skip,
-      limit,
-      sort,
-      filters} = queryBuilder(query);
+  getProcedures(query: Partial<IProcedureFilterQuery>): Promise<IProcedure[] | []> {
+    const { skip, limit, sort, filters} = queryBuilder(query);
 
-    const filterObject: Partial<IProcedureFilter> = {};
-
-    // const keys = Object.keys(filters) as Array<keyof IProcedureNameFilter>;
-    //
-    // keys.forEach((key) => {
-    //   switch (key) {
-    //     case 'name':
-    //       filterObject.name = { $regex: filters.name as string, $options: 'i' };
-    //       break;
-    //     default:
-    //       filterObject[key] = filters[key];
-    //   }
-    // });
-
-    if (filters.length) {
-      console.log('hhh');
-      filterObject.name = { $regex: filters.name as string, $options: 'i' };
-      // console.log(filterObject);
+    if (filters.name) {
+      filters.name = { $regex: filters.name as string, $options: 'i' };
     }
 
-    return ProcedureModel.find(filterObject).limit(+limit).skip(skip).sort(sort) as any;
-
+    return ProcedureModel.find(filters).limit(+limit).skip(skip).sort(sort) as any;
   }
 
 }

@@ -20,6 +20,3 @@ export interface IProcedureFilterQuery {
     name?: string
 }
 
-export interface IProcedureFilter {
-    name?: { $regex: string, $options: string }
-}

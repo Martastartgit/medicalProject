@@ -4,7 +4,7 @@ import {newAdminValidator} from '../../validators/admin';
 import {CodesEnum, RolesEnum} from '../../constants';
 import {customErrors, ErrorHandler} from '../../errors';
 
-export const isBodyValidMiddleware = (role: RolesEnum) => (req: Request, res: Response, next: NextFunction) => {
+export const isBodyValidMiddleware = (role: RolesEnum) => (req: Request, res: Response, next: NextFunction): void => {
   try {
     switch (role) {
       case RolesEnum.ADMIN:
