@@ -7,7 +7,7 @@ import {authService, historyService} from '../../services';
 class AuthController {
   async adminAuthorization(req: IRequest, res: Response, next: NextFunction) {
     try {
-      const {_id, password} = req.admin as IAdmin;
+      const {_id, password, name } = req.admin as IAdmin;
 
       const adminInfo = req.body;
 
@@ -19,7 +19,7 @@ class AuthController {
 
       await historyService.createHistory({event: adminHistoryEnum.ADMIN_LOGIN, adminId: _id});
 
-      res.json({access_token, refresh_token});
+      res.json({access_token, refresh_token, name, _id});
 
     } catch (e) {
       next(e);

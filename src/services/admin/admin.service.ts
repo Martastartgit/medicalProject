@@ -15,7 +15,7 @@ class AdminService {
   }
 
   findAdminById(id: string): Promise<IAdmin | null> {
-    return AdminModel.findById(id).exec();
+    return AdminModel.findById(id).select('-password').exec();
   }
 
   // findByActionToken(action: AdminsActionEnum, token: string): Promise<IAdmin | null> {

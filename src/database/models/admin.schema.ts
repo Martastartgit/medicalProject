@@ -13,7 +13,7 @@ const tokenSubModel = {
 export const AdminSchema = new Schema<IAdmin>({
   name: {
     type: String,
-    minlength: 4,
+    minlength: 2,
     maxlength: 25,
     required: true
   },

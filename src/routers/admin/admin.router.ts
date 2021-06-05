@@ -3,6 +3,7 @@ import {Router} from 'express';
 import {AdminsActionEnum, RolesEnum, StatusEnum} from '../../constants';
 import {adminController, historyController} from '../../controllers';
 import {
+  changeEmailMiddleware,
   checkAccessTokenMiddleware,
   checkAdminAccessTokenMiddleware,
   checkIsEmailInDBMiddleware,
@@ -10,7 +11,8 @@ import {
   checkIsPasswordValidMiddleware,
   checkStatusMiddleware, isAdminIdValidMiddleware,
   isBodyValidMiddleware,
-  isEmailExistMiddleware
+  isEmailExistMiddleware,
+  isUpdateBodyValidMiddleware
 } from '../../middleware';
 
 const router = Router();
@@ -39,7 +41,8 @@ router.route('/:adminId')
   .all(isAdminIdValidMiddleware,
     checkAccessTokenMiddleware(RolesEnum.ADMIN))
   .get(adminController.findById)
-  .post( checkIsEmailValidMiddleware,
+  .post(isUpdateBodyValidMiddleware(RolesEnum.ADMIN),
+    changeEmailMiddleware(RolesEnum.ADMIN),
     adminController.updateAdmin)
   .delete(checkAccessTokenMiddleware(RolesEnum.ADMIN), adminController.deleteAdmin);
 

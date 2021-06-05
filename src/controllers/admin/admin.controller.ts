@@ -72,9 +72,9 @@ class AdminController {
 
       const tokenToDelete = await req.get(RequestHeadersEnum.AUTHORIZATION);
 
-      const newPassword = await hashPassword(password);
-
       const newToken = tokens.filter((item)=> item.token !== tokenToDelete);
+
+      const newPassword = await hashPassword(password);
 
       await adminService.updateByParams(_id, {password: newPassword, tokens: newToken} as Partial<IAdmin>);
 

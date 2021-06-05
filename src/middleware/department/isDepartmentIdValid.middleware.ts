@@ -3,25 +3,23 @@ import {NextFunction, Response} from 'express';
 
 import {CodesEnum} from '../../constants';
 import {customErrors, ErrorHandler} from '../../errors';
-import {IDoctor, IRequest} from '../../interfaces';
-import {doctorService} from '../../services';
+import {IDepartment, IRequest} from '../../interfaces';
+import {departmentService} from '../../services';
 
-export const isDoctorIdValidMiddleware =
+export const isDepartmentIdValidMiddleware =
     async (req: IRequest, res: Response, next: NextFunction): Promise<void | NextFunction> => {
       try {
-        const { doctorId } = req.params;
+        const { departmentId } = req.params;
 
-        if (!mongoose.Types.ObjectId.isValid(doctorId)) {
+        if (!mongoose.Types.ObjectId.isValid(departmentId)) {
           throw new ErrorHandler(CodesEnum.BAD_REQUEST, customErrors.BAD_REQUEST_NOT_VALID_ID.message);
         }
 
-        const doctorById = await doctorService.findDoctorById(doctorId) as IDoctor;
+        const departmentById = await departmentService.findDepartmentById(departmentId) as IDepartment;
 
-        if (!doctorById) {
+        if (!departmentById) {
           throw new ErrorHandler(CodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message);
         }
-
-        req.doctor = doctorById;
 
         next();
       } catch (e) {

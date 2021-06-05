@@ -1,7 +1,8 @@
 import {NextFunction, Response} from 'express';
-import {historyService, procedureService} from '../../services';
-import {IAdmin, IProcedure, IRequest} from '../../interfaces';
+
 import {adminHistoryEnum} from '../../constants';
+import {IAdmin, IProcedure, IRequest} from '../../interfaces';
+import {historyService, procedureService} from '../../services';
 
 class ProcedureController {
   async createNewProcedure(req: IRequest, res: Response, next: NextFunction) {
