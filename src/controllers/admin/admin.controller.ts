@@ -68,6 +68,7 @@ class AdminController {
   async setNewPassword(req: IRequest, res: Response, next: NextFunction){
     try {
       const { _id, tokens = [] } = req.admin as IAdmin;
+
       const { password } = req.body;
 
       const tokenToDelete = await req.get(RequestHeadersEnum.AUTHORIZATION);
